@@ -20,12 +20,12 @@ function App() {
     if (msAuth && appToken) {
       Cookies.set("ms-token", msAuth);
       Cookies.set("app-token", appToken);
-      Cookies.set("ms-refresh-token", refreshToken);
+      Cookies.set("ms-refresh-token", refreshToken as string);
       window.location.href = "http://localhost:5173";
       return;
     }
-    window.location.href =
-      "https://amalitech-sso.amalitech-dev.net/login?query=about";
+    window.location.href = "https://amalitech-sso.amalitech-dev.net/login";
+    // window.location.href = "http://localhost:3000/login";
     //request token
   };
   useEffect(() => {
