@@ -21,7 +21,7 @@ function App() {
       Cookies.set("ms-token", msAuth);
       Cookies.set("app-token", appToken);
       Cookies.set("ms-refresh-token", refreshToken as string);
-      window.location.href = "http://localhost:5173";
+      window.location.href = "/";
       return;
     }
     window.location.href = "https://amalitech-sso.amalitech-dev.net/login";
