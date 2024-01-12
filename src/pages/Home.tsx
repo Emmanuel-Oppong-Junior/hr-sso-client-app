@@ -1,8 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
-
+import Cookies from "js-cookie";
 const Home: React.FC = () => {
+  //check user login
+
+  const authenticate = () => {
+    //check if there's token
+    console.log(window.location);
+    const msToken = Cookies.get("ms-token");
+    if (msToken) {
+      return;
+    }
+
+    const queryParams = new URLSearchParams(window.location.search);
+    const msAuth = queryParams.get("ms-token");
+    const appToken = queryParams.get("app-token");
+    const refreshToken = queryParams.get("ms-refresh-token");
+
+    if (msAuth && appToken) {
+      Cookies.set("ms-token", msAuth, { sameSite: "none", secure: true });
+      Cookies.set("app-token", appToken);
+      Cookies.set("ms-refresh-token", refreshToken as string);
+      window.location.href = "/";
+      return;
+    }
+  };
+
+  useEffect(() => {
+    authenticate();
+  }, []);
   return (
     <>
       <Navbar />
@@ -15,9 +42,7 @@ const Home: React.FC = () => {
               alt=""
             />
           </div>
-          <h1 className="font-extrabold text-3xl mb-10">
-            Welcome Amalitech HR
-          </h1>
+          <h1 className="font-extrabold text-3xl mb-10">Welcome Amalitech HR</h1>
           <div>
             <Link to="/">
               <button className="btn btn-active">Home</button>
