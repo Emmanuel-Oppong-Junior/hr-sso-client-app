@@ -16,7 +16,7 @@ const Login: React.FC = () => {
         <div className="max-w-md">
           <h1 className="text-5xl font-bold">Hello there</h1>
           <p className="py-6">Click on Login to access Amalitech Apps</p>
-          <Link to="http://localhost:3000/login">
+          <Link to="https://amalitech-sso.amalitech-dev.net/login">
             <button className="btn btn-primary">Get Started</button>
           </Link>
         </div>
