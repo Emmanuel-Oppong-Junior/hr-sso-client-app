@@ -1,12 +1,12 @@
 import React from "react";
 import { loggedInUser } from "../utils";
+import Cookies from "js-cookie";
 const Navbar: React.FC = () => {
   const user = loggedInUser();
   const handleLogout = async () => {
     // Cookies.remove("ms-token");
-    // axios.get("http://localhost:3000/logout?post_logout_redirect_uri=http://localhost:5173");
-    window.location.href = "http://localhost:3000/logout";
-    //window.location.href = "https://login.microsoftonline.com/common/oauth2/v2.0/logout";
+    const getLoginHint = Cookies.get("login-hint");
+    window.location.href = `https://amalitech-sso.amalitech-dev.net/logout?login-hint=${getLoginHint}`;
   };
   return (
     <div className="navbar bg-secondary">
