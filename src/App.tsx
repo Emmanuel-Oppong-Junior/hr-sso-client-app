@@ -5,7 +5,6 @@ import Cookies from "js-cookie";
 function App() {
   const [proceed, setProceed] = useState(false);
   const authenticate = async () => {
-    console.log(window.location);
     //check if there's token
     const msToken = Cookies.get("ms-token");
     if (msToken) {
@@ -16,10 +15,13 @@ function App() {
     const msAuth = queryParams.get("ms-token");
     const appToken = queryParams.get("app-token");
     const refreshToken = queryParams.get("ms-refresh-token");
+    const loginHint = queryParams.get("login-hint");
+
     if (msAuth && appToken) {
-      Cookies.set("ms-token", msAuth);
-      Cookies.set("app-token", appToken);
-      Cookies.set("ms-refresh-token", refreshToken as string);
+      Cookies.set("ms-token", msAuth, { secure: true, sameSite: "none" });
+      Cookies.set("app-token", appToken, { secure: true, sameSite: "none" });
+      Cookies.set("login-hint", loginHint as string, { secure: true, sameSite: "none" });
+      Cookies.set("ms-refresh-token", refreshToken as string, { secure: true, sameSite: "none" });
       setProceed(true);
       window.location.href = "/";
       return;
