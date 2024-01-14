@@ -15,9 +15,7 @@ const Home: React.FC = () => {
               alt=""
             />
           </div>
-          <h1 className="font-extrabold text-3xl mb-10">
-            Welcome Amalitech HR
-          </h1>
+          <h1 className="font-extrabold text-3xl mb-10">Welcome Amalitech HR</h1>
           <div>
             <Link to="/">
               <button className="btn btn-active">Home</button>
