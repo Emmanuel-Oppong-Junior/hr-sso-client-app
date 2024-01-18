@@ -16,12 +16,24 @@ function App() {
     const appToken = queryParams.get("app-token");
     const refreshToken = queryParams.get("ms-refresh-token");
     const loginHint = queryParams.get("login-hint");
+    const expiresIn = queryParams.get("expires-at");
 
+    const expirationTimeInMillis = Number(expiresIn) * 1000;
+
+    // Create a Date object with the calculated expiration time
+    const expirationDate = new Date(expirationTimeInMillis);
+
+    const cookieOption: Cookies.CookieAttributes = {
+      secure: true,
+      sameSite: "none",
+      expires: new Date(expirationDate),
+    };
     if (msAuth && appToken) {
-      Cookies.set("ms-token", msAuth, { secure: true, sameSite: "none" });
-      Cookies.set("app-token", appToken, { secure: true, sameSite: "none" });
-      Cookies.set("login-hint", loginHint as string, { secure: true, sameSite: "none" });
-      Cookies.set("ms-refresh-token", refreshToken as string, { secure: true, sameSite: "none" });
+      Cookies.set("ms-token", msAuth, cookieOption);
+      Cookies.set("app-token", appToken, cookieOption);
+      Cookies.set("login-hint", loginHint as string, { expires: 1 });
+      Cookies.set("ms-refresh-token", refreshToken as string, cookieOption);
+      Cookies.set("expires", expiresIn as string, cookieOption);
       setProceed(true);
       window.location.href = "/";
       return;
