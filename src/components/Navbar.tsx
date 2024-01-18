@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 const Navbar: React.FC = () => {
   const user = loggedInUser();
   const handleLogout = async () => {
-    // Cookies.remove("ms-token");
+    Cookies.remove("ms-token");
     const getLoginHint = Cookies.get("login-hint");
     window.location.href = `https://amalitech-sso.amalitech-dev.net/logout?login-hint=${getLoginHint}`;
   };
