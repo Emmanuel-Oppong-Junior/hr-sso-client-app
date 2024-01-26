@@ -6,13 +6,13 @@ function App() {
   const [proceed, setProceed] = useState(false);
   const authenticate = async () => {
     //check if there's token
-    const msToken = Cookies.get("ms-token");
+    const msToken = Cookies.get("app-token");
     if (msToken) {
       setProceed(true);
       return;
     }
     const queryParams = new URLSearchParams(window.location.search);
-    const msAuth = queryParams.get("ms-token");
+    const msAuth = queryParams.get("app-token");
     const appToken = queryParams.get("app-token");
     const refreshToken = queryParams.get("ms-refresh-token");
     const loginHint = queryParams.get("login-hint");
@@ -29,7 +29,6 @@ function App() {
       expires: new Date(expirationDate),
     };
     if (msAuth && appToken) {
-      Cookies.set("ms-token", msAuth, cookieOption);
       Cookies.set("app-token", appToken, cookieOption);
       Cookies.set("login-hint", loginHint as string, { expires: 1 });
       Cookies.set("ms-refresh-token", refreshToken as string, cookieOption);
