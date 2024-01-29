@@ -25,7 +25,7 @@ function App() {
 
     const cookieOption: Cookies.CookieAttributes = {
       secure: true,
-      sameSite: "none",
+      sameSite: "None",
       expires: new Date(expirationDate),
     };
     if (msAuth && appToken) {
