@@ -7,19 +7,19 @@ function App() {
   const authenticate = async () => {
     //check if there's token
     const msToken = Cookies.get("app-token");
+
     if (msToken) {
       setProceed(true);
       return;
     }
-    const queryParams = new URLSearchParams(window.location.search);
-    const msAuth = queryParams.get("app-token");
-    const appToken = queryParams.get("app-token");
-    const refreshToken = queryParams.get("ms-refresh-token");
-    const loginHint = queryParams.get("login-hint");
-    const expiresIn = queryParams.get("expires-at");
 
+    const result = await fetchToken();
+
+    const appToken = result.app_token;
+    const refreshToken = result.ms_refresh_token;
+    const loginHint = result.login_hint;
+    const expiresIn = result.expires_at;
     const expirationTimeInMillis = Number(expiresIn) * 1000;
-
     // Create a Date object with the calculated expiration time
     const expirationDate = new Date(expirationTimeInMillis);
 
@@ -28,7 +28,8 @@ function App() {
       sameSite: "None",
       expires: new Date(expirationDate),
     };
-    if (msAuth && appToken) {
+
+    if (appToken) {
       Cookies.set("app-token", appToken, cookieOption);
       Cookies.set("login-hint", loginHint as string, { expires: 1 });
       Cookies.set("ms-refresh-token", refreshToken as string, cookieOption);
@@ -39,6 +40,19 @@ function App() {
     }
     setProceed(true);
   };
+
+  const fetchToken = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/login-token", {
+        method: "GET",
+        credentials: "include",
+      });
+      return await response.json();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     authenticate();
   }, []);

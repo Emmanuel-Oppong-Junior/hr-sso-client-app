@@ -4,9 +4,10 @@ import Cookies from "js-cookie";
 const Navbar: React.FC = () => {
   const user = loggedInUser();
   const handleLogout = async () => {
-    Cookies.remove("ms-token");
+    Cookies.remove("app-token");
     const getLoginHint = Cookies.get("login-hint");
-    window.location.href = `https://amalitech-sso.amalitech-dev.net/logout?login-hint=${getLoginHint}`;
+    // window.location.href = `https://amalitech-sso.amalitech-dev.net/logout?login-hint=${getLoginHint}`;
+    window.location.href = `http://localhost:3000/logout?login-hint=${getLoginHint}&account=${user.email}&redirect-url=http://locahost:5173/login`;
   };
   return (
     <div className="navbar bg-secondary">
